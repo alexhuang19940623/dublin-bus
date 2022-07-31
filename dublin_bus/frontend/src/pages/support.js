@@ -7,20 +7,20 @@ import { getPayload, isUserAuthenticated } from "../lib/auth";
 import "./support.css";
 
 export function Support() {
-  //当前登录email的工单
+  //Cases for the currently logged in email
   const [contents, set_contents] = useState([]);
 
-  //textarea的ref
+  //textarea's ref
   const text_input = useRef();
 
-  //当前登录的email
+  //The currently logged in email
   const [email, set_email] = useState(null);
   let email_ = null;
-  //是否管理员
+  //If the user is super user
   const [is_super_user, set_super] = useState(false);
   let is_super_user_ = false;
 
-  //获取用户信息,设置状态
+  //Get user information, set the user status
   const getUserInfo = async () => {
     const userId = getPayload().sub;
     const { data } = await getUser(userId);
@@ -33,7 +33,7 @@ export function Support() {
     console.log(email_);
   };
 
-  //获取当前登录人的工单
+  //Get the user's case
   const devUrl = `http://127.0.0.1:8000`;
   const prodUrl = ``;
   const baseUrl = process.env.NODE_ENV === "production" ? prodUrl : devUrl;
@@ -41,19 +41,19 @@ export function Support() {
     return axios.get(`${baseUrl}/get/${email_}/`);
   }
 
-  //获取所有人的工单
+  //Get all cases
   const get_all_content = () => {
     return axios.get(`${baseUrl}/get/all/`)
   }
 
-  //更新工单状态
+  //Refresh user's case status
   const update_content_state = async (email_) => {
     let data = null;
-    //管理员获取所有工单
+    //super user get all cases
     if (is_super_user_) {
       data = await get_all_content();
     }
-    //一般用户获取自己的工单 
+    //General user access to their own cases 
     else {
       data = await get_content(email_);
     }
@@ -67,7 +67,7 @@ export function Support() {
     }
   }
 
-  //添加当前人的新工单到数据库
+  //Add content for the current person to the database
   const add_content = async (e) => {
     const email_ = e.currentTarget.dataset.email
     console.log(email_);
@@ -95,13 +95,13 @@ export function Support() {
     }
   }
 
-  //回复
+  //reply
   const update_reply = async (e) => {
     const id_ = e.currentTarget.dataset.id;
     const textarea = document.getElementById('textarea__' + id_.toString());
     //console.log(id_);
     //console.log(textarea.value);
-    //存入数据库
+    //save in the database
     const data = {
       id: id_,
       reply: textarea.value,
@@ -118,7 +118,7 @@ export function Support() {
   }
 
 
-  //如果是在登录状态下，获取用户信息，获取工单
+  //If user is logged in, get user information, get cases
   useEffect(async () => {
     if (isUserAuthenticated()) {
       await getUserInfo();
