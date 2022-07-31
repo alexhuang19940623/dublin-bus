@@ -22,6 +22,5 @@ urlpatterns = [
     path('api/bus/', include('api.urls')),
     path('api/auth/', include('jwt_auth.urls')),
     path('api/spotify/', include('spotify.urls')),
+    path("",include('frontend.urls')),
 ]
-
-urlpatterns += [path('', include('frontend.urls'))]

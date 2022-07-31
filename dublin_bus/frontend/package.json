@@ -35,7 +35,7 @@
     "babel-loader": "^8.2.2",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.4",
-    "webpack": "^5.39.0",
+    "webpack": "^5.74.0",
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
@@ -57,6 +57,7 @@
     "postcss-loader": "^7.0.1",
     "postcss-preset-env": "^7.7.2",
     "react": "^17.0.0",
+    "react-confetti": "^6.1.0",
     "react-dom": "^17.0.0",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",

@@ -1,8 +1,22 @@
 from django.urls import path, re_path
-from .views import index 
+from .views import *
 
-app_name='frontend'
+app_name = 'frontend'
 
 urlpatterns = [
-    re_path(r'^(?:.*)/?$', index, name='')
+    # django url 后端
+    path("add/", add_content),
+    path("get/all/", get_all_content),
+    path('get/<str:email>/', get_content),
+    path('del/<int:id>/', delete_one),
+    path("update/", update_one),
+
+    # react page
+    path('', index, name='index'),
+    path('support/', index, name='support'),
+    path("events/", index, name="events"),
+    path("account/", index, name="account"),
+    path("wordle/", index, name="wordle"),
+
+
 ]

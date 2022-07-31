@@ -14,11 +14,10 @@ export function MobileMenu() {
   const { mapContainerType, setMapContainerType } =
     useContext(MapContainerContext);
 
-  const themeClasses = `${
-    isDarkMode
-      ? "bg-primary-black text-system-grey3 hover:text-system-grey1 hover:bg-system-grey7"
-      : "bg-system-grey2 text-system-grey5 hover:text-system-grey7 hover:bg-system-grey3"
-  }`;
+  const themeClasses = `${isDarkMode
+    ? "bg-primary-black text-system-grey3 hover:text-system-grey1 hover:bg-system-grey7"
+    : "bg-system-grey2 text-system-grey5 hover:text-system-grey7 hover:bg-system-grey3"
+    }`;
 
   useEffect(() => {
     setAuth(isUserAuthenticated());
@@ -98,6 +97,7 @@ export function MobileMenu() {
         >
           Routes
         </Disclosure.Button>
+
 
         {auth ? (
           <>

@@ -1,0 +1,140 @@
+body {
+    background-color: cornsilk;
+}
+
+.support {
+    position: relative;
+    width: 100%;
+    padding: 0 0 40px 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    margin: 20px auto 0 auto;
+    width: 500px;
+    border-radius: 16px;
+    background-color: bisque;
+    padding: 0 0 10px 0;
+}
+
+.card>div {
+    width: 100%;
+    padding: 6px 10px 0 10px;
+}
+
+.card>div>span {
+    display: block;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 14px;
+    color: darkgray;
+}
+
+.card>div>span.large_font {
+    font-size: 16px;
+    font-weight: 700;
+    color: black;
+}
+
+
+.card>div.reply>textarea {
+    border: none;
+    outline: none;
+    resize: none;
+    display: block;
+    width: 400px;
+    margin-top: 10px;
+}
+
+.card>div.reply>.reply_btn_div {
+    display: flex;
+}
+
+.card>div.reply>.reply_btn_div>button {
+    display: block;
+    border-radius: 8px;
+    background-color: rgba(51, 119, 255, 1);
+    margin: 10px 10px 10px 10px;
+}
+
+.card>div.reply>.reply_btn_div>button:nth-of-type(2) {
+    background-color: coral;
+    opacity: 1;
+}
+
+.card>div.reply>.reply_btn_div>button:hover {
+    background-color: rgba(51, 119, 255, 0.7);
+}
+
+.card>div.reply>.reply_btn_div>button:nth-of-type(2):hover {
+    background-color: coral;
+    opacity: 0.7;
+}
+
+.card>div.reply>.reply_btn_div>button>span {
+    color: white;
+    display: block;
+    font-size: 16px;
+    margin: 2px 15px 2px 15px;
+}
+
+.fixed_input_div {
+    width: 100%;
+    overflow: hidden;
+}
+
+.fixed_input_div>.input_div {
+    margin: auto;
+    width: 640px;
+}
+
+.fixed_input_div>.input_div>textarea {
+    border: none;
+    outline: none;
+    resize: none;
+    display: block;
+    width: 80%;
+    margin: 10px auto 10px auto;
+}
+
+.fixed_input_div>.input_div>button {
+    display: block;
+    border-radius: 8px;
+    background-color: rgba(51, 119, 255, 1);
+    margin: 10px 0 10px 10%;
+}
+
+.fixed_input_div>.input_div>button:hover {
+    background-color: rgba(51, 119, 255, 0.7);
+}
+
+.fixed_input_div>.input_div>button>span {
+    color: white;
+    display: block;
+    font-size: 16px;
+    margin: 2px 15px 2px 15px;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    /* For mobile phones: */
+    .card {
+        width: 95%;
+    }
+
+    .fixed_input_div>.input_div {
+        width: 95%;
+    }
+
+    .fixed_input_div>.input_div>textarea{
+        width: 100%;
+    }
+
+    .card>div.reply>textarea{
+        width: 90%;
+    }
+}

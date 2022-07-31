@@ -35,6 +35,7 @@ class BasicProfileSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'email',
+            'is_superuser',
             'profile_image',
             'favourited_stops',
             'favourited_routes',

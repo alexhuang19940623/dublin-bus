@@ -51,9 +51,11 @@ class LoginView(APIView):
             raise PermissionDenied(detail='Unauthorized')
         # Setting an expiry time of one week
         expiry_time = datetime.now() + timedelta(days=7)
+        print(expiry_time);
+        print(expiry_time.timestamp())
         token = jwt.encode(
             {'sub': user_to_login.id,
-            'exp': int(expiry_time.strftime('%s'))
+            'exp': int(expiry_time.timestamp())
             },
             settings.SECRET_KEY,
             algorithm='HS256'
@@ -61,7 +63,7 @@ class LoginView(APIView):
         # Returning a response with the token
         return Response({
             'token': token,
-            'message': f'Welcome back, {email}!'
+            'message': email,
         }, status=status.HTTP_200_OK)
 
 
@@ -113,4 +115,5 @@ class ProfileView(APIView):
             raise NotFound()
         # Serializing the response
         serialized_user = BasicProfileSerializer(user_to_show)
+        print(serialized_user.data)
         return Response(serialized_user.data, status=status.HTTP_200_OK)
