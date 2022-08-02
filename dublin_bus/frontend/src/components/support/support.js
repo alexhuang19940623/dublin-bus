@@ -10,20 +10,20 @@ import "./support.css";
 
 export function Support() {
   const [is_dark] = useTheme();
-  //当前登录email的工单
+  //cases currently logged into email
   const [contents, set_contents] = useState([]);
 
-  //textarea的ref
+  //textarea's ref
   const text_input = useRef();
 
-  //当前登录的email
+  //current email
   const [email, set_email] = useState(null);
   let email_ = null;
-  //是否管理员
+  //if is the super user
   const [is_super_user, set_super] = useState(false);
   let is_super_user_ = false;
 
-  //获取用户信息,设置状态
+  //get user's information and set current status
   const getUserInfo = async () => {
     const userId = getPayload().sub;
     const { data } = await getUser(userId);
@@ -36,7 +36,7 @@ export function Support() {
     console.log(email_);
   };
 
-  //获取当前登录人的工单
+  //get current user's case
   const devUrl = `http://127.0.0.1:8000`;
   const prodUrl = ``;
   const baseUrl = process.env.NODE_ENV === "production" ? prodUrl : devUrl;
@@ -44,19 +44,19 @@ export function Support() {
     return axios.get(`${baseUrl}/get/${email_}/`);
   }
 
-  //获取所有人的工单
+  //get all cases
   const get_all_content = () => {
     return axios.get(`${baseUrl}/get/all/`)
   }
 
-  //更新工单状态
+  //refresh case status
   const update_content_state = async (email_) => {
     let data = null;
-    //管理员获取所有工单
+    //admin get the case
     if (is_super_user_) {
       data = await get_all_content();
     }
-    //一般用户获取自己的工单 
+    //user get the case 
     else {
       data = await get_content(email_);
     }
@@ -70,7 +70,7 @@ export function Support() {
     }
   }
 
-  //添加当前人的新工单到数据库
+  //add the case to database
   const add_content = async (e) => {
     const email_ = e.currentTarget.dataset.email
     console.log(email_);
@@ -89,7 +89,7 @@ export function Support() {
     }
   }
 
-  //如果是在登录状态下，获取用户信息，获取工单
+  //If you are logged in, get user information, get cases
   useEffect(() => {
     const ready = async () => {
       if (isUserAuthenticated()) {
