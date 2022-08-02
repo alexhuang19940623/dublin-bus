@@ -1,20 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useTheme } from "../../hooks";
 import { AccountSection, Card } from "../container";
 import { FareToggle, PaymentToggle, ThemeToggle } from "../toggle";
 
+import { SecondaryButton } from "../elements/button";
+
+import { Support } from "../support/support";
+
 export function GeneralSettings() {
   const [isDarkMode] = useTheme();
+
+  const [is_support_open, set_support] = useState(false);
+
+  const handleEditEmailClick = () => {
+    set_support(!is_support_open);
+  }
 
   return (
     <AccountSection title='General' first={true}>
       <Card isFirst={true}>
         <div className='pr-10'>
           <p
-            className={`${
-              isDarkMode ? "text-primary-white" : "text-primary-black"
-            }`}
+            className={`${isDarkMode ? "text-primary-white" : "text-primary-black"
+              }`}
           >
             Theme
           </p>
@@ -28,9 +37,8 @@ export function GeneralSettings() {
       <Card>
         <div className='pr-10'>
           <p
-            className={`${
-              isDarkMode ? "text-primary-white" : "text-primary-black"
-            }`}
+            className={`${isDarkMode ? "text-primary-white" : "text-primary-black"
+              }`}
           >
             Fare Calculator
           </p>
@@ -41,12 +49,12 @@ export function GeneralSettings() {
         </div>
         <FareToggle />
       </Card>
-      <Card isLast={true}>
+      
+      <Card >
         <div className='pr-10'>
           <p
-            className={`${
-              isDarkMode ? "text-primary-white" : "text-primary-black"
-            }`}
+            className={`${isDarkMode ? "text-primary-white" : "text-primary-black"
+              }`}
           >
             Payment Type
           </p>
@@ -57,6 +65,31 @@ export function GeneralSettings() {
         </div>
         <PaymentToggle />
       </Card>
+
+      <Card isLast={true} className='relative'>
+        <div className='sm:pr-0 pr-10'>
+          <p
+            className={`${isDarkMode ? "text-primary-white" : "text-primary-black"
+              }`}
+          >
+            Support
+          </p>
+          <p className='text-sm'>Let us know if you are experiening technical problems and one of our technicians will talk to you in real time.</p>
+          <Support></Support>
+        </div>
+        <SecondaryButton
+          type='action'
+          aria-expanded='false'
+          onClick={handleEditEmailClick}
+          data-bs-toggle='collapse'
+          aria-controls='collapseEditEmail'
+          className='absolute top-8 right-4'
+          data-bs-target='#collapse_support'
+        >
+          {is_support_open ? "Close" : "Open"}
+        </SecondaryButton>
+      </Card>
+
     </AccountSection>
   );
 }

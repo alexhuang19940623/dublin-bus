@@ -7,4 +7,3 @@ export * from "./account";
 export * from "./testing";
 export * from "./journey";
 
-export * from "./support";

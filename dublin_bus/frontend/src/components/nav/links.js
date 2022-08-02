@@ -93,13 +93,6 @@ export function Links() {
             >
               Weather
             </div>
-            <div
-              className={`${themeClasses} px-2 py-2 transition ease-in-out duration-300	cursor-pointer`}
-            >
-              <Link to='/support'>
-              <span>Support</span>
-            </Link>
-            </div>
           </div>
         </div>
       </div>
