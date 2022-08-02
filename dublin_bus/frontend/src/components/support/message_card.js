@@ -3,7 +3,7 @@ import { useTheme } from "../../hooks";
 
 import "./support.css";
 
-export function MessageCard({ item, is_super_user, contents, set_contents }) {
+export function MessageCard({ email, item, is_super_user, contents, set_contents }) {
     const [is_dark] = useTheme();
 
     const devUrl = `http://127.0.0.1:8000`;
@@ -54,7 +54,7 @@ export function MessageCard({ item, is_super_user, contents, set_contents }) {
             </div>
             <div className="reply">
                 {item.reply != "" ? (
-                    <span>The admin reply at {item.reply_time}:</span>
+                    <span>{email.split("@")[0]} reply at {item.reply_time}:</span>
                 ) : (
                     <span>no reply yet</span>
                 )}

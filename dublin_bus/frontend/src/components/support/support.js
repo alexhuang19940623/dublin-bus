@@ -111,7 +111,7 @@ export function Support() {
         {
           contents.map((item, index) => {
             return (
-              <MessageCard key={item.id} item={item} is_super_user={is_super_user} contents={contents} set_contents={set_contents} />
+              <MessageCard email={email} key={item.id} item={item} is_super_user={is_super_user} contents={contents} set_contents={set_contents} />
             )
             })
         }
