@@ -86,6 +86,7 @@ export function Support() {
       data['creat_time'] = res.data['creat_time'];
       console.log(res);
       set_contents((old_arr) => [...old_arr, data])
+      text_input.current.value='';
     }
   }
 
