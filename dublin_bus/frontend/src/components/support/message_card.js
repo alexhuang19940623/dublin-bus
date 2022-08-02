@@ -19,13 +19,13 @@ export function MessageCard({ item, is_super_user, contents, set_contents }) {
         }
     }
 
-    //回复
+    //reply
     const update_reply = async (e) => {
         const id_ = e.currentTarget.dataset.id;
         const textarea = document.getElementById('textarea__' + id_.toString());
         //console.log(id_);
         //console.log(textarea.value);
-        //存入数据库
+        //save content to database
         const data = {
             id: id_,
             reply: textarea.value,
