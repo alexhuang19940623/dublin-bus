@@ -53,7 +53,7 @@ export function MessageCard({ item, is_super_user, contents, set_contents }) {
             </div>
             <div className="reply">
                 {item.reply != "" ? (
-                    <span>{item.email} reply at {item.reply_time}:</span>
+                    <span>Admin reply at {item.reply_time}:</span>
                 ) : (
                     <span>no reply yet</span>
                 )}
