@@ -13,7 +13,7 @@ export function GeneralSettings() {
 
   const [is_support_open, set_support] = useState(false);
 
-  const handleEditEmailClick = () => {
+  const handle_support_click = () => {
     set_support(!is_support_open);
   }
 
@@ -80,9 +80,9 @@ export function GeneralSettings() {
         <SecondaryButton
           type='action'
           aria-expanded='false'
-          onClick={handleEditEmailClick}
+          onClick={handle_support_click}
           data-bs-toggle='collapse'
-          aria-controls='collapseEditEmail'
+          aria-controls='collapse_support'
           className='absolute top-8 right-4'
           data-bs-target='#collapse_support'
         >
