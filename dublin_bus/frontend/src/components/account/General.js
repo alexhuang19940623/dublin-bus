@@ -78,7 +78,7 @@ export function GeneralSettings() {
           >
             Support
           </p>
-          <p className='text-sm'>
+          <p className='text-sm' style={{maxWidth:'600px'}}>
            Let us know if you experienced technical problems
            and our admin will contact you in time.
           </p>
