@@ -4,7 +4,7 @@ from .views import *
 app_name='frontend'
 
 urlpatterns = [
-     # django url 后端
+     # django url bacend
     path("add/", add_content),
     path("get/all/", get_all_content),
     path('get/<str:email>/', get_content),
