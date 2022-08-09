@@ -78,7 +78,7 @@ export function GeneralSettings() {
           >
             Support
           </p>
-          <p className='text-sm md:max-w-[500px] max-w-[150px]'>
+          <p className='text-sm md:max-w-[500px] max-w-[240px]'>
            Let us know if you experienced technical problems
            and one of our admins will talk to you in real time.
           </p>
