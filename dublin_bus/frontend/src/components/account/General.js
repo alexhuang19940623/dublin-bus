@@ -78,7 +78,7 @@ export function GeneralSettings() {
           >
             Support
           </p>
-          <p className='text-sm'>Let us know if you are experiening technical problems and one of our technicians will talk to you in real time.</p>
+          <p className='text-sm'>Let us know if you experienced technical problems and our admin will contact you in time.</p>
           <Support></Support>
         </div>
         <SecondaryButton
