@@ -80,7 +80,7 @@ export function GeneralSettings() {
           </p>
           <p className='text-sm' style={{maxWidth:'600px'}}>
            Let us know if you experienced technical problems
-           and our admin will contact you in time.
+           and one of our admins will talk to you in real time.
           </p>
           <Support></Support>
         </div>
