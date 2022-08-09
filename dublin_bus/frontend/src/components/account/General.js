@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { useTheme } from "../../hooks";
 import { AccountSection, Card } from "../container";
-import { FareToggle, PaymentToggle, ThemeToggle } from "../toggle";
+import { FareSelect, PaymentToggle, ThemeToggle } from "../toggle";
 
 import { SecondaryButton } from "../elements/button";
 
@@ -22,8 +22,9 @@ export function GeneralSettings() {
       <Card isFirst={true}>
         <div className='pr-10'>
           <p
-            className={`${isDarkMode ? "text-primary-white" : "text-primary-black"
-              }`}
+            className={`${
+              isDarkMode ? "text-primary-white" : "text-primary-black"
+            }`}
           >
             Theme
           </p>
@@ -37,24 +38,25 @@ export function GeneralSettings() {
       <Card>
         <div className='pr-10'>
           <p
-            className={`${isDarkMode ? "text-primary-white" : "text-primary-black"
-              }`}
+            className={`${
+              isDarkMode ? "text-primary-white" : "text-primary-black"
+            }`}
           >
             Fare Calculator
           </p>
           <p className='text-sm'>
-            Let us know if you are an adult or child, so we can accurately
-            calculate your fare.
+            Let us know if you are an adult, student or child, so we can
+            accurately calculate your fare.
           </p>
         </div>
-        <FareToggle />
+        <FareSelect />
       </Card>
-      
-      <Card >
+      <Card>
         <div className='pr-10'>
           <p
-            className={`${isDarkMode ? "text-primary-white" : "text-primary-black"
-              }`}
+            className={`${
+              isDarkMode ? "text-primary-white" : "text-primary-black"
+            }`}
           >
             Payment Type
           </p>
@@ -66,6 +68,8 @@ export function GeneralSettings() {
         <PaymentToggle />
       </Card>
 
+  
+
       <Card isLast={true} className='relative'>
         <div className='sm:pr-0 pr-10'>
           <p
@@ -74,7 +78,7 @@ export function GeneralSettings() {
           >
             Support
           </p>
-          <p className='text-sm'>Let us know if you have technical problems and one of our technicians will reply in time.</p>
+          <p className='text-sm'>Let us know if you are experiening technical problems and one of our technicians will talk to you in real time.</p>
           <Support></Support>
         </div>
         <SecondaryButton
@@ -93,3 +97,4 @@ export function GeneralSettings() {
     </AccountSection>
   );
 }
+

@@ -67,7 +67,6 @@ function RouteContent(props) {
   const [isDarkMode] = useTheme();
 
   const routeChange = (index) => {
-    console.log("index", index);
     setMapDetails({
       ...mapDetails,
       routeIdx: Number(index),
@@ -202,7 +201,7 @@ function ExpandedContext(props) {
                   <p className='px-1'>|</p>
                   <p>{step.transit.num_stops} stops</p>
                   <p className='px-1'>|</p>
-                  <p>Estimated Cost: {calculateFare(step.transit.num_stops)}</p>
+                  <p>Cost: {calculateFare(step.transit.num_stops)}</p>
                 </div>
               ) : (
                 <p className=''>About: {step.duration.text}</p>

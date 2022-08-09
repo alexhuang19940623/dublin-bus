@@ -16,7 +16,7 @@ def index(request):
 
 def get_content(request, email):
     data = Content.objects.filter(email=email).values(
-        "id", "email", "content", "reply", 'creat_time', 'reply_time')
+        "id", "email", "content", "reply", 'creat_time', 'reply_time', 'reply_email')
     if data:
         data = list(data)
         # print(data)
@@ -28,7 +28,7 @@ def get_content(request, email):
 
 def get_all_content(request):
     data = Content.objects.all().values(
-        "id", "email", "content", "reply", 'creat_time', 'reply_time')
+        "id", "email", "content", "reply", 'creat_time', 'reply_time', 'reply_email')
     if data:
         data = list(data)
         # print(data)
@@ -72,9 +72,10 @@ def update_one(request):
         entry = Content.objects.filter(pk=data['id'])
         if entry:
             entry.update(
-                reply=data['reply'], reply_time=datetime.now().strftime("%Y/%m/%d %H:%M"))
+                reply=data['reply'], reply_email=data['reply_email'], reply_time=datetime.now().strftime("%Y/%m/%d %H:%M"))
             return JsonResponse({"state": "ok", 'reply_time': datetime.now().strftime("%Y/%m/%d %H:%M"), })
         else:
             return JsonResponse({"state": "not ok"})
     else:
         return JsonResponse({"state": "not ok"})
+

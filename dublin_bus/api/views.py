@@ -12,6 +12,9 @@ from django.core import serializers
 import json
 import os
 import math
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+
 
 class UpcomingStopTimesRoutes(APIView):
     def get(self, request):
@@ -29,6 +32,19 @@ class AllStopsView(APIView):
         stops = Stop.objects.all()
         serializedStops = BasicStopsSerializer(stops, many=True)
         return Response(serializedStops.data, status=status.HTTP_200_OK)
+
+class AllStopsFileView(APIView):
+    def get(self, request):
+        with open('/Users/eoinbarr/Desktop/UCD/dublin-bus-team-5/dublin_bus/api/all_stops.json', 'r') as f:
+            stops = json.load(f)
+        return Response(stops, status=status.HTTP_200_OK)
+
+
+class AllRoutesFileView(APIView):
+    def get(self, request):
+        with open('/Users/eoinbarr/Desktop/UCD/dublin-bus-team-5/dublin_bus/api/all_routes.json', 'r') as f:
+            routes = json.load(f)
+        return Response(routes, status=status.HTTP_200_OK)
 
 
 class AllRoutesView(APIView):
@@ -136,3 +152,40 @@ class MLPredictionView(APIView):
         print('TOTAL_STOPS:', numberOfStops)  
         print('PREDICTION', (float(res[0])/60) * (int(numStops)/int(numberOfStops)) )  
         return Response(math.floor((float(res[0])/60) * (int(numStops)/int(numberOfStops))), status=status.HTTP_200_OK)
+
+
+class MLPredictView(APIView):
+    def get(self, request):
+        numStops = request.GET['numStops']
+        headSign = request.GET['headSign']
+        routeHeadSign = request.GET['routeHeadSign']
+        routeShortName = request.GET['routeShortName']
+        try:
+            direction = Tripnewnew.objects.filter(headsign = headSign)[0].direction
+        except:
+            direction = 1
+        directory = 'dir2' if direction == 1 else 'dir1'
+
+        with open('/Users/eoinbarr/Desktop/UCD/dublin-bus-team-5/dublin_bus/api/directions.json', 'r') as f:
+            dictDirs = json.load(f)
+        try:
+            numberOfStops = dictDirs[f'60-{routeShortName}-d12-1'][f' {routeHeadSign}']
+        except:
+            numberOfStops = dictDirs[f'60-{routeShortName}-b12-1'][f' {routeHeadSign}']
+            
+                
+        humidity = request.GET['humidity']
+        wind = request.GET['wind']
+        seconds = request.GET['seconds']
+        day = request.GET['day']
+        month = request.GET['month']
+
+        filename = f'/Users/eoinbarr/Desktop/UCD/dublin-bus-team-5/machinelearning/data/modelling/randomforest/joblibfiles/line_{routeShortName}_model/{directory}/line_{routeShortName}_rfr.joblib' 
+        model = joblib.load(filename) 
+        res = model.predict([[int(humidity),float(wind),int(seconds),int(day),int(month)]])
+        print('PREDICTION:', res[0]/60)        
+        print('PART_STOPS:', numStops)        
+        print('TOTAL_STOPS:', numberOfStops)  
+        print('PREDICTION', (float(res[0])/60) * (int(numStops)/int(numberOfStops)) )  
+        return Response(math.floor((float(res[0])/60) * (int(numStops)/int(numberOfStops))), status=status.HTTP_200_OK)
+

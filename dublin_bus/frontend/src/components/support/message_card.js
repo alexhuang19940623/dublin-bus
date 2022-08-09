@@ -19,42 +19,43 @@ export function MessageCard({ email, item, is_super_user, contents, set_contents
         }
     }
 
-    //reply
+    //回复
     const update_reply = async (e) => {
         const id_ = e.currentTarget.dataset.id;
         const textarea = document.getElementById('textarea__' + id_.toString());
         //console.log(id_);
         //console.log(textarea.value);
-        //save content to database
+        //存入数据库
         const data = {
             id: id_,
             reply: textarea.value,
+            reply_email: email,
         }
         let res = await axios.post(`${baseUrl}/update/`, data);
         //console.log(res);
         const newState = contents.map(obj => {
             if (obj.id == id_) {
-                return { ...obj, reply: textarea.value, reply_time: res.data['reply_time'] };
+                return { ...obj, reply: textarea.value, reply_email: email, reply_time: res.data['reply_time'] };
             }
             return obj;
         });
         set_contents(newState);
-        textarea.value='';
+        textarea.value = '';
     }
 
     return (
-        <div className={`${is_dark ? "card card_dark" :"card"}`} key={item.id}>
+        <div className={`${is_dark ? "card card_dark" : "card"}`} key={item.id}>
             <div className="user_info">
                 <span>created by {item.email} at {item.creat_time}</span>
             </div>
             <div className="detail">
-                <span className={`${is_dark ? "large_font large_font_dark" :"large_font"}`}>
+                <span className={`${is_dark ? "large_font large_font_dark" : "large_font"}`}>
                     {item.content}
                 </span>
             </div>
             <div className="reply">
                 {item.reply != "" ? (
-                    <span>{email.split("@")[0]} reply at {item.reply_time}</span>
+                    <span>{item.reply_email.split("@")[0]} reply at {item.reply_time}:</span>
                 ) : (
                     <span>no reply yet</span>
                 )}
@@ -62,11 +63,11 @@ export function MessageCard({ email, item, is_super_user, contents, set_contents
                 {
                     is_super_user ? (
                         <>
-                            <span className={`${is_dark ? "large_font large_font_dark" :"large_font"}`}>
+                            <span className={`${is_dark ? "large_font large_font_dark" : "large_font"}`}>
                                 {item.reply}
                             </span>
                             <textarea placeholder="please input your reply..." id={"textarea__" + item.id.toString()}
-                            className={`${is_dark ? "textarea_dark" :""}`}
+                                className={`${is_dark ? "textarea_dark" : ""}`}
                             >
                             </textarea>
                             <div className="reply_btn_div">
@@ -79,7 +80,7 @@ export function MessageCard({ email, item, is_super_user, contents, set_contents
                             </div>
                         </>
                     ) : (
-                        <span className={`${is_dark ? "large_font large_font_dark" :"large_font"}`}>
+                        <span className={`${is_dark ? "large_font large_font_dark" : "large_font"}`}>
                             {item.reply}
                         </span>
                     )

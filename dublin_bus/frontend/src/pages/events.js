@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { useTheme } from "../hooks";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { LoadingSpinner } from "../components/loading";
 import { Slider, EventCard } from "../components/events";
 import { MobileSidePanel } from "../components/sidepanel";
+import ConnectSpotify from "../components/spotify/connect";
+import { AuthenticatedContext } from "../App";
 
 export function Events({ events }) {
   const [isDarkMode] = useTheme();
   const [openSidePanel, setOpenSidePanel] = useState(false);
+  const { isAuthenticated } = useContext(AuthenticatedContext);
 
   const handleSidePanelClose = () => {
     setOpenSidePanel(false);
@@ -33,9 +36,14 @@ export function Events({ events }) {
                 : "text-system-grey6 bg-gradient-to-r bg-gradient-to-b from-[#3377FF] via-blue-400 to-system-grey2"
             }`}
           >
-            <p className='md:text-5xl text-4xl pl-4 mb-8 font-semibold'>
-              Events
-            </p>
+            <div className='flex items-center justify-center '>
+              <p className='md:text-5xl text-4xl pl-4 mb-8 font-semibold'>
+                Events
+              </p>
+              <div className='pl-4'>
+                {isAuthenticated && <ConnectSpotify events={true} />}
+              </div>
+            </div>
             <div className='absolute top-4 right-4'>
               <div
                 className={`md:hidden ${
@@ -50,39 +58,29 @@ export function Events({ events }) {
             </div>
           </div>
           <div className=''>
-            {events.pops && (
-              <Slider id={"popContentSlider"} title={"Pop"}>
-                <>
-                  {events.pops.map((pop) => (
-                    <EventCard event={pop} key={pop.id} />
-                  ))}
-                </>
-              </Slider>
-            )}
             {events.raps && (
               <Slider id={"rapContentSlider"} title={"Rap"}>
                 <>
                   {events.raps.map((rap) => (
-                    <EventCard event={rap} key={rap.id} />
+                    <EventCard type={"music"} event={rap} key={rap.id} />
                   ))}
                 </>
               </Slider>
             )}
-
-            {events.sports && (
-              <Slider id={"sportContentSlider"} title={"Sports"}>
+            {events.folks && (
+              <Slider id={"folkContentSlider"} title={"Folk"}>
                 <>
-                  {events.sports.map((sport) => (
-                    <EventCard event={sport} key={sport.id} />
+                  {events.folks.map((folk) => (
+                    <EventCard type={"music"} event={folk} key={folk.id} />
                   ))}
                 </>
               </Slider>
             )}
-            {events.comedies && (
-              <Slider id={"comedyContentSlider"} title={"Comedy"}>
+            {events.rocks && (
+              <Slider id={"rapContentSlider"} title={"Rock"}>
                 <>
-                  {events.comedies.map((comedy) => (
-                    <EventCard event={comedy} key={comedy.id} />
+                  {events.rocks.map((rock) => (
+                    <EventCard type={"music"} event={rock} key={rock.id} />
                   ))}
                 </>
               </Slider>
