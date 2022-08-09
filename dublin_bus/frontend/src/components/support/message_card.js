@@ -25,7 +25,7 @@ export function MessageCard({ email, item, is_super_user, contents, set_contents
         const textarea = document.getElementById('textarea__' + id_.toString());
         //console.log(id_);
         //console.log(textarea.value);
-        //存入数据库
+        //Write to database
         const data = {
             id: id_,
             reply: textarea.value,
