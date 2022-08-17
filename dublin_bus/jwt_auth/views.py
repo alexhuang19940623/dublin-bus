@@ -51,10 +51,12 @@ class LoginView(APIView):
             raise PermissionDenied(detail='Unauthorized')
         # Setting an expiry time of one week
         expiry_time = datetime.now() + timedelta(days=7)
+        print(expiry_time);
+        print(expiry_time.timestamp())
         token = jwt.encode(
             {'sub': user_to_login.id,
-             'exp':  int(expiry_time.timestamp()),
-             },
+            'exp': int(expiry_time.timestamp())
+            },
             settings.SECRET_KEY,
             algorithm='HS256'
         )
@@ -92,7 +94,7 @@ class ProfileEditView(APIView):
         current_user = User.objects.get(id=request.user.id)
         edited_current_user = UserUpdateSerializer(
             current_user, data=request.data)
-        # Checking if the edit made was valid
+        # Checking if the edit made was valid 
         if edited_current_user.is_valid():
             edited_current_user.save()
             return Response(edited_current_user.data, status=status.HTTP_202_ACCEPTED)
@@ -104,6 +106,7 @@ class ProfileView(APIView):
     # Function that gets a user's profile if they are authenticated
     permission_classes = (IsAuthenticated, )
 
+
     def get(self, _request, user_pk):
         try:
             user_to_show = User.objects.get(pk=user_pk)
@@ -112,5 +115,5 @@ class ProfileView(APIView):
             raise NotFound()
         # Serializing the response
         serialized_user = BasicProfileSerializer(user_to_show)
-        
+        print(serialized_user.data)
         return Response(serialized_user.data, status=status.HTTP_200_OK)

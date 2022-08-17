@@ -25,14 +25,14 @@ export function JourneyForm(props) {
 
   const [isDarkMode] = useTheme();
 
-  const inputClasses = `h-10 rounded-xl md:w-76 w-72 px-2 focus:outline-none hover:placeholder-primary-blue ${
+  const inputClasses = `h-10 rounded-xl md:w-80 w-72 px-2 focus:outline-none hover:placeholder-primary-blue ${
     isDarkMode
       ? "bg-primary-black text-system-grey1 placeholder-system-grey4"
       : "bg-primary-white text-system-grey7"
   }`;
 
   return (
-    <div className='overflow-x-hidden'>
+    <div>
       <div className='flex items-center'>
         <div>
           <Autocomplete options={inputOptions}>
@@ -52,11 +52,11 @@ export function JourneyForm(props) {
           </Autocomplete>
         </div>
         <div className='pl-2 sm:pl-4'>
-          {/* {currentBrowser(window) !== "Google Chrome" && (
+          {currentBrowser(window) !== "Google Chrome" && (
             <div className='flex items-center justify-center bg-primary-blue p-1.5 rounded-lg text-system-grey2 mb-4'>
               <IoMdLocate onClick={() => setUserLocation(originRef)} />
             </div>
-          )} */}
+          )}
           <HiOutlineSwitchVertical
             onClick={handleSwitch}
             className={`h-7 w-7 hover:cursor-pointer ${
@@ -72,7 +72,7 @@ export function JourneyForm(props) {
         <BasicDateTimePicker time={time} setTime={setTime} />
         <button
           onClick={() => setTime(new Date())}
-          className='flex items-center justify-center h-10 rounded-xl bg-system-grey5 w-8 ml-2 text-white active:bg-system-grey4 '
+          className='flex items-center justify-center h-10 rounded-xl bg-system-grey5 w-8 ml-2 text-white active:bg-system-grey4'
         >
           <BsArrowRepeat />
         </button>

@@ -3,7 +3,7 @@ import { useTheme } from "../../hooks";
 import React, { useState } from "react";
 import { BsExclamationTriangleFill } from "react-icons/bs";
 
-export const Warning = ({ title, body, exitable }) => {
+export const Warning = () => {
   const [isDarkMode] = useTheme();
   const [hidden, setHidden] = useState(false);
 
@@ -22,20 +22,24 @@ export const Warning = ({ title, body, exitable }) => {
         </div>
         <div className='ml-3'>
           <div className='flex justify-between'>
-            <h3 className='text-sm  font-semibold	text-yellow-700'>{title}</h3>
-            {exitable && (
-              <FiX
-                onClick={() => setHidden(true)}
-                className={`${
-                  isDarkMode
-                    ? "text-system-grey5 hover-system-grey6"
-                    : "text-system-grey4 hover-system-grey3"
-                } cursor-pointer`}
-              />
-            )}
+            <h3 className='text-sm  font-semibold	text-yellow-700'>
+              Spotify Warning
+            </h3>
+            <FiX
+              onClick={() => setHidden(true)}
+              className={`${
+                isDarkMode
+                  ? "text-system-grey5 hover-system-grey6"
+                  : "text-system-grey4 hover-system-grey3"
+              } cursor-pointer`}
+            />
           </div>
           <div className='mt-2 text-sm text-yellow-700'>
-            <p>{body}</p>
+            <p>
+              Your browser has failed to connect to the Spotify SDK. To conintue
+              to use Spotify on this application ensure that your Spotify is
+              open on this device.
+            </p>
           </div>
         </div>
       </div>

@@ -46,6 +46,14 @@ export function TimeTable({ time, displayValues, variant }) {
                 {String(getETA(time, value.arrivalTime))}
                 {getETA(time, value.arrivalTime) === 1 ? " min" : " mins"}
               </td>
+              {console.log(
+                time,
+                "-",
+                value.arrivalTime,
+                "-",
+                getETA(time, value.arrivalTime)
+              )}
+              {}
             </tr>
           ))}
         </tbody>

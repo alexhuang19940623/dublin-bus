@@ -5,7 +5,7 @@ import { SpotifyContext, MapContainerContext } from "../../App";
 import { useIsMounted, useTheme } from "../../hooks";
 import { getSpotifyAuthUrl, isSpotifyAuthenticated } from "../../lib/api";
 
-const ConnectSpotify = ({ events }) => {
+const ConnectSpotify = () => {
   const { setMapContainerType } = useContext(MapContainerContext);
   const isMounted = useIsMounted();
   let [isSportifyAuthenticated, setIsSpotifyAuthenticated] = useState(false);
@@ -42,9 +42,7 @@ const ConnectSpotify = ({ events }) => {
     return (
       <div
         onClick={LoginSpotify}
-        className={`flex items-center justify-center h-10 rounded-xl bg-[#21c45a] w-60 text-white active:bg-[#00a240] cursor-pointer ${
-          events && "sm:w-100 w-[200px]"
-        }`}
+        className='flex items-center justify-center h-10 rounded-xl bg-[#21c45a] w-60 text-white active:bg-[#00a240] cursor-pointer'
       >
         <BsSpotify /> <p className='pl-2'>Connect to Spotify</p>
       </div>
@@ -57,32 +55,17 @@ const ConnectSpotify = ({ events }) => {
 
   return (
     <div className='mb-6'>
-      {events ? (
-        <></>
-      ) : (
-        <div className='mt-6 mb-4'>
-          <p className={headerTextClasses}>Spotify</p>
-        </div>
-      )}
+      <div className='mt-6 mb-4'>
+        <p className={headerTextClasses}>Spotify</p>
+      </div>
       {isSportifyAuthenticated ? (
-        events ? (
-          <div
-            className={`flex items-center justify-center ${
-              isDarkMode ? " text-[#21c45a]" : "text-[#10a30b]"
-            } w-60  ${events && "sm:w-100 w-[200px]"}`}
-          >
-            <BsSpotify />
-            <p className={`pl-2 font-semibold  `}>Preview with Spotify</p>
-          </div>
-        ) : (
-          <div
-            onClick={handleClick}
-            className='flex items-center justify-center h-10 rounded-xl bg-[#21c45a] w-60 text-white active:bg-[#00a240] cursor-pointer'
-          >
-            <BsSpotify />
-            <p className='pl-2'>Dublin on Spotify</p>
-          </div>
-        )
+        <div
+          onClick={handleClick}
+          className='flex items-center justify-center h-10 rounded-xl bg-[#21c45a] w-60 text-white active:bg-[#00a240] cursor-pointer'
+        >
+          <BsSpotify />
+          <p className='pl-2'>Dublin on Spotify</p>
+        </div>
       ) : (
         LoginButton()
       )}

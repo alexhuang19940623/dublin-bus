@@ -2,7 +2,4 @@
 
 ## Team Members
 
-- Bo Li
 - Eoin Barr
-- Rebecca Dillon
-- Tianyu Huang

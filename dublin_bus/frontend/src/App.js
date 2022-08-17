@@ -7,11 +7,8 @@ import "tailwindcss/tailwind.css";
 
 import {
   getComedyEvents,
-  getFolkEvents,
-  getMusicEvents,
   getPopEvents,
   getRapEvents,
-  getRockEvents,
   getSportEvents,
   getUser,
 } from "./lib/api";
@@ -30,6 +27,7 @@ import {
   Stops,
   Wordle,
   Events,
+  Support,
 } from "./pages";
 
 export const ContainerType = {
@@ -62,7 +60,6 @@ export const ThemeContext = createContext({});
 export const MapRefContext = createContext({});
 export const ExpandedContext = createContext({});
 export const MapDetailsContext = createContext({});
-export const DirectionsContext = createContext({});
 export const UserDetailsContext = createContext({});
 export const MapContainerContext = createContext({});
 export const AuthenticatedContext = createContext({});
@@ -81,10 +78,6 @@ function App() {
   const [isExpanded, toggleExpanded] = useState(false);
   const [mapRefContext, setMapRefContext] = useState(null);
   const [isAuthenticated, toggleAuthenticated] = useState(false);
-  const [directionsDetails, setDirectionsDetails] = useState({
-    origin: null,
-    destination: null,
-  });
   const [userDetails, setUserDetails] = useState({
     email: null,
     userId: null,
@@ -138,6 +131,7 @@ function App() {
     if (!userDetails.email && isUserAuthenticated()) {
       const getUserInfo = async () => {
         const userId = getPayload().sub;
+        console.log(userId);
         const { data } = await getUser(userId);
         setUserDetails({
           email: data.email,
@@ -154,15 +148,19 @@ function App() {
     const getEventsData = async () => {
       let obj = {};
       try {
+        const popRes = await getPopEvents();
+        obj = { ...obj, pops: popRes.data._embedded.events };
+
         const rapRes = await getRapEvents();
         obj = { ...obj, raps: rapRes.data._embedded.events };
 
-        const folkRes = await getFolkEvents();
-        obj = { ...obj, folks: folkRes.data._embedded.events };
+        const sportRes = await getSportEvents();
+        obj = { ...obj, sports: sportRes.data._embedded.events };
 
-        const rockRes = await getRockEvents();
-        obj = { ...obj, rocks: rockRes.data._embedded.events };
+        const comedyRes = await getComedyEvents();
+        obj = { ...obj, comedies: comedyRes.data._embedded.events };
 
+        console.log("obj", obj);
         setEvents({ ...obj });
       } catch (e) {
         console.log(e);
@@ -174,81 +172,74 @@ function App() {
   window.onSpotifyWebPlaybackSDKReady = () => setSdkReady(true);
 
   return (
-    <DirectionsContext.Provider
-      value={{ directionsDetails, setDirectionsDetails }}
+    <MapContainerContext.Provider
+      value={{ mapContainerType, setMapContainerType }}
     >
-      <MapContainerContext.Provider
-        value={{ mapContainerType, setMapContainerType }}
+      <SpotifyContext.Provider
+        value={{
+          updateSpotifyStateTwo: updateSpotifyPlayerStateTwo,
+          updateSpotifyState: updateSpotifyPlayerState,
+          playSpotifyTrack: spotifyPlayer.playSpotifyTrack,
+          authenticated: spotifyPlayer.authenticated,
+        }}
       >
-        <SpotifyContext.Provider
-          value={{
-            updateSpotifyStateTwo: updateSpotifyPlayerStateTwo,
-            updateSpotifyState: updateSpotifyPlayerState,
-            playSpotifyTrack: spotifyPlayer.playSpotifyTrack,
-            authenticated: spotifyPlayer.authenticated,
-          }}
-        >
-          <UserDetailsContext.Provider value={{ userDetails, setUserDetails }}>
-            <AuthenticatedContext.Provider
-              value={{ isAuthenticated, toggleAuthenticated }}
-            >
-              <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
-                <ExpandedContext.Provider
-                  value={{ isExpanded, toggleExpanded }}
+        <UserDetailsContext.Provider value={{ userDetails, setUserDetails }}>
+          <AuthenticatedContext.Provider
+            value={{ isAuthenticated, toggleAuthenticated }}
+          >
+            <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
+              <ExpandedContext.Provider value={{ isExpanded, toggleExpanded }}>
+                <MapRefContext.Provider
+                  value={{ mapRefContext, setMapRefContext }}
                 >
-                  <MapRefContext.Provider
-                    value={{ mapRefContext, setMapRefContext }}
+                  <MapDetailsContext.Provider
+                    value={{ mapDetails, setMapDetails }}
                   >
-                    <MapDetailsContext.Provider
-                      value={{ mapDetails, setMapDetails }}
+                    <CurrentTrackContextProvider
+                      value={{
+                        currentTrackName: currentTrackDetails.currentTrackName,
+                        currentTrackId: currentTrackDetails.currentTrackId,
+                        progress: currentTrackDetails.progress,
+                        isPlaying: currentTrackDetails.isPlaying,
+                        updateCurrentTrackDetails: UpdateCurrentTrackDetailsNow,
+                      }}
                     >
-                      <CurrentTrackContextProvider
-                        value={{
-                          currentTrackName:
-                            currentTrackDetails.currentTrackName,
-                          currentTrackId: currentTrackDetails.currentTrackId,
-                          progress: currentTrackDetails.progress,
-                          isPlaying: currentTrackDetails.isPlaying,
-                          updateCurrentTrackDetails:
-                            UpdateCurrentTrackDetailsNow,
-                        }}
-                      >
-                        <BrowserRouter>
-                          <Nav />
-                          <Routes>
-                            <Route path={"/"} element={<Journey />} />
-                            <Route path={"/login"} element={<Login />} />
-                            <Route path={"/signup"} element={<Signup />} />
-                            <Route path={"/testing"} element={<Testing />} />
-                            <Route path={"/testing2"} element={<Testing2 />} />
-                            <Route path={"/stops"} element={<Stops />} />
-                            <Route element={<ProtectedRoute />}>
-                              {" "}
-                              <Route path={"/account"} element={<Account />} />
-                              <Route path={"/wordle"} element={<Wordle />} />
-                              <Route
-                                path={"/events"}
-                                element={<Events events={events} />}
-                              />
-                            </Route>
-                          </Routes>
-                        </BrowserRouter>
-                        <SetupSpotifyWebPlayer
-                          sdkReady={sdkReady}
-                          authenticated={spotAuth}
-                        />
-                        {/* Uncomment when in production */}
-                        <UpdateCurrentTrack authenticated={spotAuth} />
-                      </CurrentTrackContextProvider>
-                    </MapDetailsContext.Provider>
-                  </MapRefContext.Provider>
-                </ExpandedContext.Provider>
-              </ThemeContext.Provider>
-            </AuthenticatedContext.Provider>
-          </UserDetailsContext.Provider>
-        </SpotifyContext.Provider>
-      </MapContainerContext.Provider>
-    </DirectionsContext.Provider>
+                      <BrowserRouter>
+                        <Nav />
+                        <Routes>
+                          <Route path={"/"} element={<Journey />} />
+                          <Route path={"/login"} element={<Login />} />
+                          <Route path={"/signup"} element={<Signup />} />
+                          <Route path={"/testing"} element={<Testing />} />
+                          <Route path={"/testing2"} element={<Testing2 />} />
+                          <Route path={"/stops"} element={<Stops />} />
+                          <Route element={<ProtectedRoute />}>
+                            {" "}
+                            <Route path={"/account"} element={<Account />} />
+                            <Route path={"/wordle"} element={<Wordle />} />
+                            <Route
+                              path={"/events"}
+                              element={<Events events={events} />}
+                            />
+                          </Route>
+                          <Route path={"/support"} element={<Support user_id={userDetails.userId}/>}/>
+                        </Routes>
+                      </BrowserRouter>
+                      <SetupSpotifyWebPlayer
+                        sdkReady={sdkReady}
+                        authenticated={spotAuth}
+                      />
+                      {/* Uncomment when in production */}
+                      {/* <UpdateCurrentTrack authenticated={spotAuth} /> */}
+                    </CurrentTrackContextProvider>
+                  </MapDetailsContext.Provider>
+                </MapRefContext.Provider>
+              </ExpandedContext.Provider>
+            </ThemeContext.Provider>
+          </AuthenticatedContext.Provider>
+        </UserDetailsContext.Provider>
+      </SpotifyContext.Provider>
+    </MapContainerContext.Provider>
   );
 }
 

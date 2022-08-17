@@ -28,14 +28,13 @@ import {
 import { center, libraries } from "../lib/map";
 import { getAllRoutes, getAllStops } from "../lib/api";
 import { LoadingSpinner } from "../components/loading";
-import { useWindowSize, useTheme, useExpanded, useResize } from "../hooks";
+import { useWindowSize, useTheme, useExpanded } from "../hooks";
 import {
   MapDetailsContext,
   MapRefContext,
   MapContainerContext,
   ContainerType,
   PlaceType,
-  DirectionsContext,
 } from "../App";
 import { MobileSidePanel } from "../components/sidepanel";
 
@@ -52,11 +51,8 @@ export function Journey() {
   const { setMapRefContext } = useContext(MapRefContext);
   const { mapContainerType } = useContext(MapContainerContext);
   const { mapDetails, setMapDetails } = useContext(MapDetailsContext);
-  const { directionsDetails, setDirectionsDetails } =
-    useContext(DirectionsContext);
-  const [openSidePanel, setOpenSidePanel] = useState(false);
 
-  const [, windowHeight] = useResize();
+  const [openSidePanel, setOpenSidePanel] = useState(false);
 
   const [origin, setOrigin] = useState(null);
   const [allRoutes, setAllRoutes] = useState(null);
@@ -75,21 +71,16 @@ export function Journey() {
   };
 
   const calculateRoute = async (ol, dl) => {
+    console.log(ol, dl);
     const originVal = typeof ol === "string" ? ol : originRef.current.value;
     const destinationVal =
       typeof dl === "string" ? dl : destinationRef.current.value;
     if (routeErrorCheck(originVal, destinationVal, setInputError, time)) return;
-
-    setDirectionsDetails({
-      ...directionsDetails,
-      origin: originVal,
-      destination: destinationVal,
-    });
-
     setOrigin(originVal);
     const dirServ = new window.google.maps.DirectionsService();
 
     const weatherVariables = await configureWeatherVariables(time);
+    console.log("WV", weatherVariables);
 
     try {
       setInputError(null);
@@ -106,6 +97,7 @@ export function Journey() {
         results,
         weatherVariables
       );
+      console.log("predictedResults", predictedResults);
       setLoading(false);
       setMapDetails({ resObj: predictedResults, routeIdx: 0, markers: [] });
     } catch (e) {
@@ -217,11 +209,7 @@ export function Journey() {
           center={center}
           zoom={12}
           options={getMapOptions(isDarkMode)}
-          mapContainerStyle={getMapContainerStyle(
-            width,
-            isExpanded,
-            windowHeight
-          )}
+          mapContainerStyle={getMapContainerStyle(width, isExpanded)}
           onLoad={onMapLoad}
         >
           {mapContainerType.type === ContainerType.REALTIME ||

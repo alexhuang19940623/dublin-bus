@@ -1,5 +1,4 @@
 export * from "./useTheme";
-export * from "./useResize";
 export * from "./useWordle";
 export * from "./useExpanded";
 export * from "./useIsMounted";

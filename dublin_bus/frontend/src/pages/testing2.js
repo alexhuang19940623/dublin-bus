@@ -1,12 +1,10 @@
 import React from "react";
-import { FareSelect } from "../components/toggle";
+import Confetti from "../components/wordle/confetti";
 
 export function Testing2() {
   return (
     <div className={`w-100 h-[100vh]`}>
-      <div className='py-4'>
-        <FareSelect />
-      </div>
+      <Confetti />
     </div>
   );
 }

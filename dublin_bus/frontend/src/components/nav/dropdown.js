@@ -9,7 +9,7 @@ export function DropDown() {
   const { userDetails } = useContext(UserDetailsContext);
   const [isDarkMode] = useTheme();
   const themeBgClasses = `${
-    isDarkMode ? "bg-primary-black" : "bg-system-grey2"
+    isDarkMode ? "bg-system-grey7" : "bg-system-grey2"
   }`;
   const themeMenuClasses = `${
     isDarkMode
@@ -25,6 +25,7 @@ export function DropDown() {
       // eslint-disable-next-line no-restricted-globals
       // location.reload();
       toggleAuthenticated(false);
+
       navigate("/");
     };
     try {
@@ -64,19 +65,11 @@ export function DropDown() {
           className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 ${themeBgClasses}`}
         >
           <Link
-            to='/wordle'
-            className={`block px-4 py-2 text-sm ${themeMenuClasses} transition ease-in-out duration-300	`}
-          >
-            <Menu.Item>
-              <div>Dublin Street Wordle</div>
-            </Menu.Item>
-          </Link>
-          <Link
             to='/events'
             className={`block px-4 py-2 text-sm ${themeMenuClasses} transition ease-in-out duration-300	`}
           >
             <Menu.Item>
-              <div>Events</div>
+              <>Events</>
             </Menu.Item>
           </Link>
           <Link
@@ -84,18 +77,27 @@ export function DropDown() {
             className={`block px-4 py-2 text-sm ${themeMenuClasses} transition ease-in-out duration-300	`}
           >
             <Menu.Item>
-              <div>Account</div>
+              <>Account</>
             </Menu.Item>
           </Link>
-          <div
+
+          <Link
+            to='/wordle'
+            className={`block px-4 py-2 text-sm ${themeMenuClasses} transition ease-in-out duration-300	`}
+          >
+            <Menu.Item>
+              <>Dublin Street Wordle</>
+            </Menu.Item>
+          </Link>
+          {/* <div
             href='#'
             onClick={handleSignout}
             className={`block px-4 py-2 text-sm ${themeMenuClasses} transition ease-in-out duration-300	cursor-pointer`}
           >
             <Menu.Item>
-              <div>Logout</div>
+              <>Logout</>
             </Menu.Item>
-          </div>
+          </div> */}
         </Menu.Items>
       </Transition>
     </Menu>

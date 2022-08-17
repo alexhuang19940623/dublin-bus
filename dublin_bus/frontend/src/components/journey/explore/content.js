@@ -7,7 +7,6 @@ import {
   MapRefContext,
   MapDetailsContext,
   MapContainerContext,
-  DirectionsContext,
 } from "../../../App";
 import { Popup } from "../../popup";
 import { Error } from "../../error";
@@ -70,9 +69,6 @@ export function PlaceCard(props) {
   const [pinned, setPinned] = useState(false);
   const [popup, setPopup] = useState(false);
 
-  const { directionsDetails, setDirectionsDetails } =
-    useContext(DirectionsContext);
-
   const themeClasses = `${
     isDarkMode
       ? "bg-system-grey7  border-system-grey7 text-system-grey4"
@@ -104,12 +100,13 @@ export function PlaceCard(props) {
   };
 
   const handleUpdateRoute = () => {
-    calculateRoute(directionsDetails.origin, place.vicinity).then(() => {
+    calculateRoute(origin, place.vicinity);
+    setTimeout(() => {
       setPopup(true);
-      setTimeout(() => {
-        setPopup(false);
-      }, 3000);
-    });
+    }, 1000);
+    setTimeout(() => {
+      setPopup(false);
+    }, 3000);
   };
 
   return (

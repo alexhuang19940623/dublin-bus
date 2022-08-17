@@ -1,10 +1,10 @@
-from django.urls import path
-from .views import * 
+from django.urls import path, re_path
+from .views import *
 
-app_name='frontend'
+app_name = 'frontend'
 
 urlpatterns = [
-     # django url bacend
+    # django url 后端
     path("add/", add_content),
     path("get/all/", get_all_content),
     path('get/<str:email>/', get_content),
@@ -13,7 +13,10 @@ urlpatterns = [
 
     # react page
     path('', index, name='index'),
+    path('support/', index, name='support'),
     path("events/", index, name="events"),
     path("account/", index, name="account"),
     path("wordle/", index, name="wordle"),
+
+
 ]

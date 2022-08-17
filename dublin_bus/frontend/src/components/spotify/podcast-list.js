@@ -37,21 +37,11 @@ const PodcastList = () => {
         </div>
       ) : error ? (
         <div className='pt-6'>
-          <Warning
-            exitable={false}
-            title={`Spotify Warning`}
-            body={`It looks like your Spotify account has not been authorized for this app. Email eoin.barr@ucdconnect.ie with your name and the email address asscoiated with your Spotify account to get access.`}
-          />
+          <Error />
         </div>
       ) : (
         <div className='flex flex-col items-start justify-start'>
-          {playSpotifyTrack == null && (
-            <Warning
-              exitable={true}
-              title={`Spotify Warning`}
-              body={`Your browser has failed to connect to the Spotify SDK. To conintue to use Spotify on this application ensure that your Spotify is open on this device.`}
-            />
-          )}
+          {playSpotifyTrack == null && <Warning />}
           {podcastDetails.podcasts.map((podcast) => (
             <PodcastDetail key={podcast.name} podcast={podcast} />
           ))}

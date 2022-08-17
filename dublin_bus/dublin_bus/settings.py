@@ -93,10 +93,7 @@ DATABASES = {
         'USER': 'admin',
         'PASSWORD': 'password',
         'HOST': 'dublin-bus.ccirycnlryes.eu-west-1.rds.amazonaws.com',
-        'PORT': 3306,
-        'OPTIONS': {
-            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
+        'PORT': 3306
     }
 }
 
@@ -159,3 +156,4 @@ AUTH_USER_MODEL = 'jwt_auth.User'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

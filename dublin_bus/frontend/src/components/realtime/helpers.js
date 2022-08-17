@@ -44,6 +44,7 @@ export const getDisplayData = async (
   try {
     setLoading(true);
     const { data } = await getUpcomingStopTimesRoutes(stopId, time);
+    console.log("data", data);
     setDisplayValues(data);
     setLoading(false);
   } catch (e) {

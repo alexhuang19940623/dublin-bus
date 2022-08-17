@@ -5,7 +5,7 @@ import { useTheme, useWordle } from "../../hooks";
 import { Popup } from "../popup";
 import Confetti from "./confetti";
 
-export function WordleContainer({ solution, setReset, reset, coords }) {
+export function WordleContainer({ solution, setReset, reset }) {
   const {
     popup,
     confetti,
@@ -86,6 +86,9 @@ export function WordleContainer({ solution, setReset, reset, coords }) {
           <div>
             <p className='text-3xl font-strong'>Dublin Street Wordle</p>
           </div>
+          <div className='flex items-center'>
+            <div>Current solution - {solution}</div>
+          </div>
         </div>
         <Grid currentGuess={currGuess} guesses={guesses} turn={turn} />
         <Keypad usedKeys={usedKeys} handleKeyup={handleKeyup} />
@@ -95,7 +98,6 @@ export function WordleContainer({ solution, setReset, reset, coords }) {
           solution={solution}
           isCorrect={isCorrect}
           setOpen={setIsModalOpen}
-          coords={coords}
           handleStartOver={handleStartOver}
         />
         {confetti && <Confetti />}

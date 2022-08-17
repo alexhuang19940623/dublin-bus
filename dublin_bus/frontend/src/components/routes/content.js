@@ -63,6 +63,7 @@ export function RoutesContent({
     const getFavRoutes = async () => {
       try {
         const { data } = await getUser(userId);
+        console.log("user", data);
         setFavRoutes(data.favouritedRoutes);
       } catch (e) {
         console.log(e);
@@ -75,6 +76,7 @@ export function RoutesContent({
     if (selectedRoute === null) {
       return;
     }
+    console.log("sr", selectedRoute);
     const getRouteMarkers = async () => {
       try {
         setLoading(true);
@@ -82,6 +84,7 @@ export function RoutesContent({
           selectedRoute.routeId,
           selectedRoute.headsign
         );
+        console.log("markers:", data);
         setSelectedRouteMarkers(data);
         setStops(data);
         const mid = Math.floor(data.length / 2);
@@ -97,6 +100,7 @@ export function RoutesContent({
       }
     };
     getRouteMarkers();
+    console.log("New route selected");
   }, [selectedRoute]);
 
   const handleAddRemoveFav = async () => {
@@ -106,6 +110,7 @@ export function RoutesContent({
         selectedRoute.headsign,
         userId
       );
+      console.log("favR", data);
       const res = await getUser(userId);
       setFavRoutes(res.data.favouritedRoutes);
     } catch (e) {
